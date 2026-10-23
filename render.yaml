@@ -1,0 +1,46 @@
+# One Render service runs all three apps. If the instance sleeps, a single
+# wake-up brings Salary Slip, Bill Generator and Template Builder back
+# together — no per-app cold starts.
+services:
+  - type: web
+    name: nexofab-apps
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: "8080"
+
+      # ---- Salary Slip (its own Supabase project; tables live in the `salary` schema)
+      - key: SALARY_DATABASE_URL
+        sync: false # Supabase session pooler URL, password URL-encoded, ?schema=salary
+      - key: SALARY_DIRECT_URL
+        sync: false # Supabase direct db.<ref>.supabase.com URL, ?schema=salary
+
+      # ---- Bill Generator
+      - key: BILL_DATABASE_URL
+        sync: false
+      - key: BILL_DIRECT_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false # also inlined into the client bundle at build time
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: BILL_SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: BILL_STORAGE_BUCKET
+        value: bill-files
+
+      # ---- Template Builder
+      - key: TPL_DATABASE_URL
+        sync: false
+      - key: TPL_SUPABASE_URL
+        sync: false
+      - key: TPL_SUPABASE_SERVICE_KEY
+        sync: false # the Supabase service_role key (stays on the server)
+      - key: TPL_CORS_ORIGINS
+        value: "*" # same-origin behind nginx; tighten to your domain if you like
+      - key: TPL_ALLOW_SIGNUP
+        value: first

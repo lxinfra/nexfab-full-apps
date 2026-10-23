@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NexoFab Industries Limited — Company Profile</title>
+<!-- Print source for the company profile PDF.
+     Regenerate: open in Chrome → Print → Save as PDF (A4, margins: none, background graphics on),
+     or run headless Chrome with --print-to-pdf. -->
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #0b2a4a; --navy-dark: #071c33; --blue: #1f4e8c; --red: #c8102e; --red-dark: #9c0c24;
+    --text: #23303e; --muted: #5f6f80; --line: #dfe5ec; --alt: #f3f6fa;
+    --heading: Georgia, 'Times New Roman', serif; --body: 'Segoe UI', Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: var(--body); color: var(--text); background: #888; font-size: 10.5pt; line-height: 1.6; }
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: #fff; margin: 0 auto; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  @media screen { .page { margin: 10mm auto; box-shadow: 0 4px 20px rgba(0,0,0,.3); } }
+  h1, h2, h3 { font-family: var(--heading); color: var(--navy); line-height: 1.15; }
+  img { display: block; }
+
+  /* ── shared page furniture ── */
+  .arc { position: absolute; top: -52mm; left: -52mm; width: 80mm; height: 80mm; border-radius: 50%; border: 6mm solid var(--red); border-top-color: transparent; border-left-color: transparent; transform: rotate(-45deg); }
+  .wedge { position: absolute; top: 0; right: 0; width: 70mm; height: 34mm; background: linear-gradient(200deg, var(--blue) 0 55%, transparent 55.3%); }
+  .mini-logo { position: absolute; top: 7mm; right: 9mm; height: 15mm; background: #fff; padding: 1.5mm 3mm; border-radius: 2mm; z-index: 3; }
+  .title { position: absolute; top: 24mm; left: 16mm; right: 16mm; }
+  .title h2 { font-size: 30pt; text-transform: uppercase; letter-spacing: .5pt; }
+  .title h2 span { color: var(--red); }
+  .title .rule { width: 26mm; height: 1.4mm; background: var(--red); margin-top: 3mm; }
+  .content { position: absolute; top: 58mm; left: 16mm; right: 16mm; bottom: 20mm; }
+  .footer { position: absolute; bottom: 0; left: 0; right: 0; height: 11mm; background: var(--navy); color: rgba(255,255,255,.8); font-size: 8pt; display: flex; align-items: center; justify-content: space-between; padding: 0 16mm; }
+  .footer b { color: #fff; letter-spacing: 1pt; }
+  .footer::before { content: ""; position: absolute; top: -2mm; left: 0; width: 60mm; height: 2mm; background: var(--red); }
+  p + p { margin-top: 3mm; }
+  .lead { font-size: 11.5pt; color: var(--text); }
+  .muted { color: var(--muted); }
+  .checks { list-style: none; }
+  .checks li { position: relative; padding-left: 6mm; margin-bottom: 2mm; font-weight: 600; }
+  .checks li::before { content: ""; position: absolute; left: 0; top: 2.2mm; width: 2.4mm; height: 2.4mm; background: var(--red); }
+
+  /* ── cover ── */
+  .cover { background: var(--navy-dark); }
+  .cover .photo { position: absolute; inset: 0; background: url('../images/infra/road-paving.jpg') center/cover; }
+  .cover .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,.0) 62%), linear-gradient(0deg, rgba(7,28,51,.85) 0%, rgba(7,28,51,0) 35%); }
+  .cover .logo { position: absolute; top: 16mm; left: 16mm; height: 34mm; }
+  .cover h1 { position: absolute; top: 64mm; left: 16mm; font-size: 54pt; color: var(--navy); letter-spacing: 1pt; line-height: 1; }
+  .cover .tag { position: absolute; top: 122mm; left: 16mm; font-family: var(--heading); color: var(--red); font-size: 15pt; font-weight: bold; }
+  .cover .verticals { position: absolute; top: 132mm; left: 16mm; font-size: 10pt; color: var(--navy); letter-spacing: 2.5pt; text-transform: uppercase; font-weight: 700; }
+  .cover .slash { position: absolute; top: 142mm; right: -30mm; width: 90mm; height: 140mm; background: var(--blue); transform: skewX(-18deg); opacity: .95; }
+  .cover .slash2 { position: absolute; top: 142mm; right: 52mm; width: 6mm; height: 140mm; background: var(--red); transform: skewX(-18deg); }
+  .cover .base { position: absolute; bottom: 14mm; left: 16mm; right: 16mm; color: #fff; display: flex; justify-content: space-between; font-size: 9.5pt; }
+  .cover .base b { display: block; font-family: var(--heading); font-size: 13pt; }
+  .cover .arc-br { position: absolute; bottom: -40mm; right: -40mm; width: 95mm; height: 95mm; border-radius: 50%; border: 9mm solid var(--red); border-left-color: transparent; border-top-color: transparent; transform: rotate(-10deg); }
+
+  /* ── about ── */
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 7mm; border: 1px solid var(--line); }
+  .facts div { padding: 3mm 4mm; border-bottom: 1px solid var(--line); font-size: 9.5pt; }
+  .facts div:nth-child(odd) { background: var(--alt); font-weight: 700; color: var(--navy); }
+  .facts div:nth-last-child(-n+2) { border-bottom: 0; }
+  .wide-photo { width: 100%; height: 72mm; object-fit: cover; margin-top: 7mm; }
+
+  /* ── directors ── */
+  .director { display: grid; grid-template-columns: 46mm 1fr; gap: 7mm; align-items: start; margin-bottom: 9mm; }
+  .director .ph { width: 46mm; }
+  .director .ph img { width: 46mm; height: 56mm; object-fit: cover; object-position: top; border: 1px solid var(--line); }
+  .director .cap { background: var(--blue); color: #fff; text-align: center; padding: 1.8mm 1mm; font-family: var(--heading); font-style: italic; font-size: 8.5pt; line-height: 1.35; font-weight: bold; }
+  .director .bio { border: 1px solid var(--line); border-left: 1.4mm solid var(--red); padding: 5mm 6mm; min-height: 52mm; }
+  .director .bio h3 { font-size: 14pt; margin-bottom: 1mm; }
+  .director .bio .role { color: var(--red); font-weight: 700; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 1.5pt; margin-bottom: 3mm; }
+  .director .bio p { color: var(--muted); }
+
+  /* ── expertise ── */
+  .exp { display: grid; grid-template-columns: 36mm 1fr; align-items: center; margin-bottom: 7mm; }
+  .exp .circle { width: 36mm; height: 36mm; border-radius: 50%; border: 2.2mm solid var(--red); overflow: hidden; position: relative; z-index: 2; background: #fff; box-shadow: 0 0 0 1.2mm #fff; }
+  .exp .circle img { width: 100%; height: 100%; object-fit: cover; }
+  .exp .pill { margin-left: -12mm; background: var(--blue); color: #fff; border-radius: 0 9mm 9mm 0; padding: 4.5mm 7mm 4.5mm 17mm; display: grid; grid-template-columns: 40mm 1fr; gap: 5mm; align-items: center; min-height: 31mm; }
+  .exp .pill h3 { color: #fff; font-size: 12.5pt; }
+  .exp .pill h3 small { display: block; font-family: var(--body); font-size: 7.5pt; letter-spacing: 1.5pt; color: rgba(255,255,255,.7); font-weight: 600; margin-bottom: 1mm; }
+  .exp .pill p { font-size: 8.8pt; line-height: 1.5; color: rgba(255,255,255,.92); }
+  .exp.featured .pill { background: var(--navy); }
+  .exp.featured .circle { border-color: var(--red); }
+
+  /* ── infrastructure works ── */
+  .works { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; margin-top: 5mm; }
+  .work { border: 1px solid var(--line); }
+  .work img { width: 100%; height: 30mm; object-fit: cover; }
+  .work .wb { border-top: 1.2mm solid var(--red); padding: 3mm 4mm 3.5mm; }
+  .work h3 { font-size: 12pt; margin-bottom: 2mm; }
+  .work p { font-size: 8.8pt; color: var(--muted); margin-bottom: 2.5mm; }
+  .work .checks li { font-size: 8.5pt; margin-bottom: 1.2mm; padding-left: 4.5mm; }
+  .work .checks li::before { width: 1.8mm; height: 1.8mm; top: 1.9mm; }
+  .scope { margin-top: 7mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .scope .box { background: var(--alt); border-left: 1.4mm solid var(--red); padding: 5mm 6mm; }
+  .scope h3 { font-size: 12pt; margin-bottom: 2.5mm; }
+
+  .ms-h { font-family: var(--heading); color: var(--navy); font-size: 15pt; margin: 5mm 0 2.5mm; }
+  table.ms th, table.ms td { padding: 2mm 3.5mm; }
+  table.ms th:first-child { white-space: nowrap; }
+  table.ms th { background: var(--navy); }
+  table.ms td:first-child { width: 12mm; text-align: center; color: var(--muted); font-weight: 600; }
+  table.ms .v { text-align: right; white-space: nowrap; font-weight: 700; color: var(--navy); }
+  table.ms th.v { color: #fff; }
+  table.ms tr.tot td { background: var(--navy-dark); color: #fff; font-weight: 700; }
+  table.ms tr.tot .v { color: #fff; }
+
+  /* ── turnover ── */
+  .kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+  .kpi { background: var(--navy); color: #fff; padding: 6mm 5mm; text-align: center; }
+  .kpi b { display: block; font-family: var(--heading); font-size: 26pt; line-height: 1.1; }
+  .kpi b em { font-style: normal; color: #ff5a6e; font-size: 15pt; }
+  .kpi span { font-size: 8.5pt; color: rgba(255,255,255,.78); letter-spacing: .5pt; }
+  .chart { margin-top: 9mm; border: 1px solid var(--line); padding: 7mm 8mm 6mm; }
+  .chart h3 { font-size: 13pt; margin-bottom: 1mm; }
+  .chart .sub { font-size: 8.5pt; color: var(--muted); margin-bottom: 6mm; }
+  .bars { display: flex; align-items: flex-end; justify-content: space-around; height: 92mm; border-bottom: 1px solid #9aa7b4; position: relative; padding: 0 18mm; }
+  .grid-line { position: absolute; left: 0; right: 0; border-top: 1px dashed #e3e8ee; font-size: 7.5pt; color: var(--muted); }
+  .grid-line span { position: absolute; left: 0; top: -2.4mm; background: #fff; padding-right: 1.5mm; }
+  .bar { width: 34mm; position: relative; z-index: 1; border-radius: 1.2mm 1.2mm 0 0; }
+  .bar.actual { background: var(--navy); }
+  .bar.proj { background: repeating-linear-gradient(135deg, var(--red) 0 2.2mm, var(--red-dark) 2.2mm 4.4mm); }
+  .bar .val { position: absolute; top: -8mm; left: 0; right: 0; text-align: center; font-family: var(--heading); font-weight: bold; font-size: 13pt; color: var(--navy); }
+  .xlabels { display: flex; justify-content: space-around; padding: 2.5mm 18mm 0; font-size: 9pt; font-weight: 700; color: var(--navy); text-align: center; }
+  .xlabels div { width: 34mm; }
+  .xlabels small { display: block; font-weight: 600; color: var(--muted); font-size: 7.5pt; }
+  .legend { display: flex; gap: 8mm; justify-content: center; margin-top: 4mm; font-size: 8.5pt; color: var(--muted); }
+  .legend i { display: inline-block; width: 4mm; height: 4mm; vertical-align: -0.8mm; margin-right: 1.5mm; }
+  .note { margin-top: 7mm; }
+
+  /* ── values & registrations ── */
+  .values { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .value { background: var(--alt); border-left: 1.4mm solid var(--red); padding: 4.5mm 5mm; }
+  .value h3 { font-size: 11.5pt; margin-bottom: 1.5mm; }
+  .value p { font-size: 9pt; color: var(--muted); }
+  .sec-h { font-family: var(--heading); color: var(--navy); font-size: 16pt; margin: 9mm 0 4mm; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { background: var(--blue); color: #fff; text-align: left; padding: 2.6mm 3.5mm; font-weight: 700; }
+  td { padding: 2.6mm 3.5mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--alt); }
+  td:first-child { font-weight: 700; color: var(--navy); width: 30%; }
+
+
+  /* ── clients ── */
+  .cl-band { position: absolute; top: 28mm; left: 40mm; right: 40mm; background: var(--blue); color: #fff; text-align: center; font-family: var(--heading); font-size: 24pt; font-weight: bold; padding: 4mm 0; box-shadow: 0 1.5mm 0 var(--red); }
+  .cl-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 4mm; }
+  .cl { width: calc((100% - 12mm) / 4); border: 1px solid var(--line); border-top: 1.2mm solid var(--navy); padding: 4mm 2.5mm 3.5mm; text-align: center; background: #fff; }
+  .cl-logo { height: 19mm; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5mm; }
+  .cl-logo img { max-height: 19mm; max-width: 34mm; object-fit: contain; }
+  .cl b { display: block; font-family: var(--heading); color: var(--navy); font-size: 10.5pt; line-height: 1.2; }
+  .cl span { display: block; color: var(--muted); font-size: 7pt; line-height: 1.35; margin-top: 1mm; }
+  .cl-photo { position: absolute; left: 0; right: 0; bottom: 11mm; width: 100%; height: 40mm; object-fit: cover; }
+
+  /* ── gallery ── */
+  .gal { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .gal img { width: 100%; height: 56mm; object-fit: cover; }
+  .gal img.span2 { grid-column: span 2; height: 70mm; }
+
+  /* ── at a glance / contents ── */
+  .gl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .gl { background: var(--navy); color: #fff; padding: 5mm 4mm; text-align: center; }
+  .gl.red { background: var(--red); }
+  .gl b { display: block; font-family: var(--heading); font-size: 22pt; line-height: 1.1; }
+  .gl b em { font-style: normal; font-size: 13pt; opacity: .85; }
+  .gl span { font-size: 8pt; color: rgba(255,255,255,.82); letter-spacing: .3pt; }
+  .gl-line { margin-top: 5mm; background: var(--alt); border-left: 1.4mm solid var(--red); padding: 3.5mm 5mm; font-size: 9pt; }
+  .gl-line b { color: var(--navy); }
+  .toc-h { font-family: var(--heading); color: var(--navy); font-size: 16pt; margin: 8mm 0 3mm; }
+  .toc-row { display: flex; align-items: baseline; gap: 3mm; padding: 1.7mm 0; font-size: 10.5pt; }
+  .toc-row span { font-weight: 600; color: var(--navy); }
+  .toc-row i { flex: 1; border-bottom: 1.2px dotted #aab4bf; transform: translateY(-1mm); }
+  .toc-row b { font-family: var(--heading); color: var(--red); }
+
+  /* ── methodology ── */
+  .steps { position: relative; }
+  .steps::before { content: ""; position: absolute; left: 7mm; top: 4mm; bottom: 4mm; width: .8mm; background: var(--line); }
+  .step { display: grid; grid-template-columns: 14mm 1fr; gap: 5mm; align-items: start; margin-bottom: 4.2mm; position: relative; }
+  .step .num { width: 14mm; height: 14mm; border-radius: 50%; background: var(--blue); color: #fff; font-family: var(--heading); font-weight: bold; font-size: 12pt; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.2mm #fff, 0 0 0 1.8mm var(--red); }
+  .step h3 { font-size: 12pt; margin: 1mm 0 .8mm; }
+  .step p { font-size: 9pt; color: var(--muted); line-height: 1.5; }
+  .m-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 5mm; }
+  .m-photos img { width: 100%; height: 66mm; object-fit: cover; }
+
+  /* ── manufacturing ── */
+  .mf { display: grid; grid-template-columns: 55mm 1fr; gap: 6mm; align-items: center; margin-bottom: 7mm; border: 1px solid var(--line); border-left: 1.4mm solid var(--red); padding: 4mm; }
+  .mf img { width: 55mm; height: 46mm; object-fit: cover; }
+  .mf h3 { font-size: 13pt; margin-bottom: 1.5mm; }
+  .mf h3 small { display: block; font-family: var(--body); font-size: 7.5pt; letter-spacing: 1.5pt; color: var(--red); font-weight: 700; margin-bottom: .5mm; }
+  .mf p { font-size: 9pt; color: var(--muted); margin-bottom: 2mm; }
+  .checks.two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 4mm; }
+  .checks.two li { font-size: 8.5pt; margin-bottom: 1mm; padding-left: 4.5mm; }
+  .checks.two li::before { width: 1.8mm; height: 1.8mm; top: 1.9mm; }
+
+  /* ── why choose us ── */
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .why { border: 1px solid var(--line); border-top: 1.2mm solid var(--navy); padding: 5mm; min-height: 46mm; }
+  .why .wn { font-family: var(--heading); font-size: 26pt; color: var(--red); line-height: 1; margin-bottom: 2mm; }
+  .why h3 { font-size: 12.5pt; margin-bottom: 1.5mm; }
+  .why p { font-size: 9pt; color: var(--muted); }
+  .quote { margin-top: 8mm; background: var(--navy); color: #fff; padding: 7mm 9mm; font-family: var(--heading); font-size: 14pt; font-style: italic; line-height: 1.45; border-left: 2mm solid var(--red); }
+  .quote span { display: block; margin-top: 3mm; font-family: var(--body); font-style: normal; font-size: 8.5pt; color: rgba(255,255,255,.7); letter-spacing: .5pt; }
+
+  /* ── HSQE ── */
+  .hs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .hs { background: var(--alt); border-top: 1.2mm solid var(--red); padding: 5mm 5mm 3mm; }
+  .hs h3 { font-size: 12.5pt; margin-bottom: 3mm; }
+  .hs .checks li { font-size: 9pt; font-weight: 600; margin-bottom: 1.8mm; }
+  .hs-photo { width: 100%; height: 62mm; object-fit: cover; margin-top: 6mm; }
+
+  /* ── contact ── */
+  .contact { background: var(--navy-dark); }
+  .contact .photo { position: absolute; top: 46mm; left: 0; right: 0; bottom: 0; background: url('../images/infra/road-naya-raipur.jpg') center/cover; }
+  .contact .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(31,78,140,.82), rgba(7,28,51,.95)); }
+  .contact .top { position: absolute; top: 0; left: 0; right: 0; height: 46mm; background: #fff; }
+  .contact .top img { position: absolute; top: 8mm; left: 16mm; height: 30mm; }
+  .contact .arc-tr { position: absolute; top: -40mm; right: -40mm; width: 95mm; height: 95mm; border-radius: 50%; border: 9mm solid var(--red); border-right-color: transparent; border-top-color: transparent; transform: rotate(-10deg); }
+  .contact h2 { position: absolute; top: 120mm; left: 16mm; color: #fff; font-size: 50pt; line-height: 1; }
+  .contact .rule { position: absolute; top: 172mm; left: 16mm; width: 30mm; height: 1.6mm; background: var(--red); }
+  .contact .lines { position: absolute; top: 184mm; left: 16mm; right: 16mm; color: #fff; font-size: 11pt; }
+  .contact .line { display: grid; grid-template-columns: 9mm 1fr; margin-bottom: 4.5mm; align-items: start; }
+  .contact .line i { font-style: normal; display: inline-flex; width: 6.5mm; height: 6.5mm; border-radius: 50%; background: var(--red); align-items: center; justify-content: center; font-size: 8pt; margin-top: .4mm; }
+  .contact .line b { display: block; font-size: 8pt; letter-spacing: 1.5pt; text-transform: uppercase; color: rgba(255,255,255,.65); }
+  .contact .legal { position: absolute; bottom: 12mm; left: 16mm; right: 16mm; color: rgba(255,255,255,.6); font-size: 8pt; border-top: 1px solid rgba(255,255,255,.2); padding-top: 3mm; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 1. COVER ═══════════ -->
+<div class="page cover">
+  <div class="photo"></div>
+  <div class="slash"></div><div class="slash2"></div>
+  <img class="logo" src="assets/logo.png" alt="NexoFab Industries Limited">
+  <h1>COMPANY<br>PROFILE</h1>
+  <div class="tag">Est. 2025 • ₹40 Cr to ₹250 Cr — Building India's Future</div>
+  <div class="verticals">Infrastructure · Manufacturing · Machines · Repair</div>
+  <div class="arc-br"></div>
+  <div class="base">
+    <div><b>NexoFab Industries Limited</b>CH-73, MR 10 Main Road, Sukhliya, Indore (M.P.)</div>
+  </div>
+</div>
+
+<!-- ═══════════ 2. AT A GLANCE + CONTENTS ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>At a <span>Glance</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:58mm">
+    <div class="gl-grid">
+      <div class="gl"><b>₹40<em> Cr</em></b><span>Turnover, FY 2025-26</span></div>
+      <div class="gl red"><b>₹250<em> Cr</em></b><span>Proposed Turnover, FY 2026-27</span></div>
+      <div class="gl"><b>11</b><span>Government &amp; Public Sector Clients</span></div>
+      <div class="gl"><b>₹11<em> Cr</em></b><span>Completed Projects Listed</span></div>
+      <div class="gl"><b>4</b><span>Business Verticals</span></div>
+      <div class="gl"><b>2025</b><span>Incorporated · Indore, M.P.</span></div>
+    </div>
+    <div class="gl-line"><b>What we do:</b> Road construction · Government schools &amp; hospitals · Community halls, gardens &amp; civic works · Packaged water &amp; PET bottles · Machine manufacturing · Repair &amp; maintenance</div>
+    <div class="toc-h">Contents</div>
+    <div class="toc">
+      <div class="toc-row"><span>About Us</span><i></i><b>03</b></div>
+      <div class="toc-row"><span>Directors Desk</span><i></i><b>04</b></div>
+      <div class="toc-row"><span>Our Core Expertise</span><i></i><b>05</b></div>
+      <div class="toc-row"><span>Work We Have Delivered</span><i></i><b>06</b></div>
+      <div class="toc-row"><span>Project Execution Methodology</span><i></i><b>07</b></div>
+      <div class="toc-row"><span>Manufacturing &amp; Services</span><i></i><b>08</b></div>
+      <div class="toc-row"><span>Turnover &amp; Growth</span><i></i><b>09</b></div>
+      <div class="toc-row"><span>Our Clients</span><i></i><b>10</b></div>
+      <div class="toc-row"><span>Why Choose NexoFab</span><i></i><b>11</b></div>
+      <div class="toc-row"><span>Health, Safety, Quality &amp; Environment</span><i></i><b>12</b></div>
+      <div class="toc-row"><span>Vision &amp; Compliance</span><i></i><b>13</b></div>
+      <div class="toc-row"><span>Our Projects</span><i></i><b>14</b></div>
+      <div class="toc-row"><span>Contact Us</span><i></i><b>15</b></div>
+    </div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 3. ABOUT US ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>About <span>Us</span></h2><div class="rule"></div></div>
+  <div class="content">
+    <p class="lead"><strong>NexoFab Industries Limited</strong> is a diversified infrastructure and manufacturing company headquartered in Indore, Madhya Pradesh. Incorporated in June 2025, we were founded on a simple belief — that a company should stand behind everything it builds, from the first drawing to years of after-sales service.</p>
+    <p>Our infrastructure division carries out <strong>road construction</strong> and builds <strong>government buildings such as schools and hospitals</strong>. Alongside it, we manufacture <strong>packaged drinking water and PET bottles</strong>, design and build <strong>machines</strong> — from photocopy machines to custom industrial equipment — and run a full <strong>repair &amp; maintenance</strong> division.</p>
+    <p>In FY 2025-26, our first full financial year, NexoFab recorded a turnover of <strong>₹40 crore</strong>. With a growing order book in roads and government buildings, our proposed turnover for FY 2026-27 is <strong>₹250 crore</strong>.</p>
+    <img class="wide-photo" src="../images/infra/construction-rcc-frame.jpg" alt="">
+    <div class="facts">
+      <div>Company</div><div>NexoFab Industries Limited (Public Limited)</div>
+      <div>CIN</div><div>U28130MP2025PLC077466 — ROC Gwalior</div>
+      <div>Incorporated</div><div>25 June 2025</div>
+      <div>GSTIN</div><div>23AAMCT0204A2Z4</div>
+      <div>Udyam (MSME)</div><div>UDYAM-MP-23-0301776</div>
+      <div>Registered Office</div><div>CH-73, MR 10 Main Road, Sukhliya, Indore, M.P. — 452010</div>
+    </div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 4. DIRECTORS DESK ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Directors <span>Desk</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:54mm">
+    <div class="director">
+      <div class="ph"><img src="assets/director-ghanshyam-pastariya.jpg" alt=""><div class="cap">MR. GHANSHYAM PASTARIYA<br>DIRECTOR</div></div>
+      <div class="bio"><h3>Mr. Ghanshyam Pastariya</h3><div class="role">Director</div>
+        <p>A driving force behind NexoFab's operations, Mr. Pastariya brings deep expertise in production, quality systems, and business growth. He has been central to the company's expansion into infrastructure, and to its growth from ₹40 crore towards a proposed ₹250 crore turnover.</p></div>
+    </div>
+    <div class="director">
+      <div class="ph"><img src="assets/director-prateem-singh.jpg" alt=""><div class="cap">MR. PRATEEM SINGH<br>DIRECTOR</div></div>
+      <div class="bio"><h3>Mr. Prateem Singh</h3><div class="role">Director</div>
+        <p>Mr. Singh leads NexoFab's engineering and service verticals, with a strong focus on design, innovation, and customer satisfaction. His engineering-first approach shapes how the company plans and executes its road and building projects.</p></div>
+    </div>
+    <div class="director">
+      <div class="ph"><img src="assets/director-hukum-singh-bheel.jpg" alt=""><div class="cap">MR. HUKUM SINGH BHEEL<br>DIRECTOR</div></div>
+      <div class="bio"><h3>Mr. Hukum Singh Bheel</h3><div class="role">Director</div>
+        <p>Mr. Bheel oversees operations and workforce management at NexoFab, making sure every construction, production and service commitment is delivered safely and on time.</p></div>
+    </div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 5. CORE EXPERTISE ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Our Core <span>Expertise</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:56mm">
+    <div class="exp featured"><div class="circle"><img src="../images/infra/road-paving.jpg" alt=""></div>
+      <div class="pill"><h3><small>VERTICAL 01</small>Road Construction</h3><p>We build roads that connect towns and villages — new construction, widening and strengthening, together with drainage and road-safety works — supported by our own engineers and machinery.</p></div></div>
+    <div class="exp featured"><div class="circle"><img src="../images/infra/school-kendriya-vidyalaya.jpg" alt=""></div>
+      <div class="pill"><h3><small>VERTICAL 01</small>Government Buildings</h3><p>We construct government schools, hospitals and other public buildings — civil, structural and finishing works built to government specifications and handed over on schedule.</p></div></div>
+    <div class="exp"><div class="circle"><img src="assets/photo-18631423-500.jpg" alt=""></div>
+      <div class="pill"><h3><small>VERTICAL 02</small>Packaged Water &amp; PET Bottles</h3><p>Fully automated PET bottle blowing and packaged drinking water lines (250 ml to 20 L), with batch-wise lab testing and private-label bottling.</p></div></div>
+    <div class="exp"><div class="circle"><img src="assets/photo-3791246-500.jpg" alt=""></div>
+      <div class="pill"><h3><small>VERTICAL 03</small>Machine Manufacturing</h3><p>Photocopy machines, office equipment and custom industrial machinery — designed, prototyped, fabricated and assembled in-house.</p></div></div>
+    <div class="exp"><div class="circle"><img src="assets/photo-33118659-500.jpg" alt=""></div>
+      <div class="pill"><h3><small>VERTICAL 04</small>Repair &amp; Maintenance</h3><p>Repair, redesign and annual maintenance contracts for office and industrial machines, with genuine spares and on-site service.</p></div></div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 6. WORK WE HAVE DONE ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Work We Have <span>Delivered</span></h2><div class="rule"></div></div>
+  <div class="content">
+    <p class="lead">Our infrastructure division has carried out road construction and built government buildings — including schools and hospitals. Each project is managed end-to-end by our own engineers and site teams, from site preparation and earthwork to structure, finishing and handover.</p>
+    <div class="works">
+      <div class="work"><img src="../images/infra/road-madhya-pradesh.jpg" alt="">
+        <div class="wb"><h3>Road Construction</h3><p>Roads that improve connectivity for towns and villages.</p>
+          <ul class="checks"><li>New road construction</li><li>Widening &amp; strengthening</li><li>Drainage &amp; safety works</li></ul></div></div>
+      <div class="work"><img src="../images/infra/school-govt-primary.jpg" alt="">
+        <div class="wb"><h3>Government Schools</h3><p>Safe, well-built school buildings for students.</p>
+          <ul class="checks"><li>Classroom blocks</li><li>Civil &amp; structural works</li><li>Finishing &amp; handover</li></ul></div></div>
+      <div class="work"><img src="../images/infra/hospital-under-construction.jpg" alt="">
+        <div class="wb"><h3>Government Hospitals</h3><p>Healthcare buildings built for durability and hygiene.</p>
+          <ul class="checks"><li>Hospital buildings</li><li>Civil &amp; structural works</li><li>Finishing &amp; handover</li></ul></div></div>
+    </div>
+    <div class="ms-h">Completed Projects</div>
+    <table class="ms">
+      <tr><th style="width:16mm">S. No.</th><th>Name of Work</th><th class="v">Value</th></tr>
+        <tr><td>1</td><td>Bituminous (Damar) Road Construction</td><td class="v">₹4 Crore</td></tr>
+        <tr><td>2</td><td>Boring Motor Repair Work Across Indore City</td><td class="v">₹4 Crore</td></tr>
+        <tr><td>3</td><td>Musakhedi Cemetery Boundary Wall Construction</td><td class="v">₹40 Lakh</td></tr>
+        <tr><td>4</td><td>Community Hall Construction</td><td class="v">₹50 Lakh</td></tr>
+        <tr><td>5</td><td>Garden Development — Garden 1</td><td class="v">₹60 Lakh</td></tr>
+        <tr><td>6</td><td>Garden Development — Garden 2</td><td class="v">₹70 Lakh</td></tr>
+        <tr><td>7</td><td>Garden Development — Garden 3</td><td class="v">₹80 Lakh</td></tr>
+      <tr class="tot"><td></td><td>Total</td><td class="v">₹11 Crore</td></tr>
+    </table>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 7. EXECUTION METHODOLOGY ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Execution <span>Methodology</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:58mm">
+    <p class="lead" style="margin-bottom:6mm">Every NexoFab project follows a disciplined, step-by-step process — from the first look at the tender to the day we hand over the finished work.</p>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><div><h3>Tender Study &amp; Planning</h3><p>Detailed study of tender documents and drawings, site survey, quantity estimation and a clear construction schedule.</p></div></div>
+      <div class="step"><div class="num">02</div><div><h3>Mobilisation</h3><p>Site office set-up, deployment of machinery, skilled manpower and approved materials as per the work programme.</p></div></div>
+      <div class="step"><div class="num">03</div><div><h3>Earthwork &amp; Foundations</h3><p>Site clearance, excavation, embankment and sub-grade preparation for roads; foundations and plinth for buildings.</p></div></div>
+      <div class="step"><div class="num">04</div><div><h3>Construction</h3><p>Road layers from sub-base to bituminous or concrete surface; RCC frame, masonry and services for buildings.</p></div></div>
+      <div class="step"><div class="num">05</div><div><h3>Quality Control &amp; Testing</h3><p>Material and workmanship testing at every stage, with inspections by the client&#8217;s engineers as per specifications.</p></div></div>
+      <div class="step"><div class="num">06</div><div><h3>Finishing &amp; Handover</h3><p>Finishing works, road markings and safety items, snag closure, documentation and timely handover to the client.</p></div></div>
+    </div>
+    <div class="m-photos"><img src="../images/infra/road-paving.jpg" alt=""><img src="../images/infra/construction-foundation.jpg" alt=""></div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 8. MANUFACTURING & SERVICES ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Manufacturing &amp; <span>Services</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:58mm">
+    <p class="lead" style="margin-bottom:6mm">Alongside infrastructure, NexoFab runs three manufacturing and service verticals — built on the same promise of quality.</p>
+    <div class="mf"><img src="assets/photo-18631423-500.jpg" alt=""><div><h3><small>VERTICAL 02</small>Packaged Water &amp; PET Bottles</h3>
+      <p>Plastic water bottles and packaged drinking water made on fully automated lines, with every stage controlled in-house.</p>
+      <ul class="checks two"><li>PET bottles, 250 ml to 20 L</li><li>Purified drinking water</li><li>Automated filling &amp; capping</li><li>Batch-wise lab testing</li><li>Private-label bottling</li><li>Hygiene-first plant</li></ul></div></div>
+    <div class="mf"><img src="assets/photo-3791246-500.jpg" alt=""><div><h3><small>VERTICAL 03</small>Machine Manufacturing</h3>
+      <p>From photocopy machines to purpose-built industrial equipment — designed, prototyped, fabricated and assembled in-house.</p>
+      <ul class="checks two"><li>Photocopy machines</li><li>Office equipment</li><li>Custom industrial machinery</li><li>CAD design &amp; prototyping</li><li>Precision fabrication</li><li>Installation &amp; training</li></ul></div></div>
+    <div class="mf"><img src="assets/photo-33118659-500.jpg" alt=""><div><h3><small>VERTICAL 04</small>Repair &amp; Maintenance</h3>
+      <p>Repair, redesign and maintenance of machines of every kind — whether we built them or someone else did.</p>
+      <ul class="checks two"><li>Office &amp; industrial repairs</li><li>Redesign &amp; upgrades</li><li>Annual Maintenance Contracts</li><li>Genuine spare parts</li><li>On-site service</li><li>Rapid turnaround</li></ul></div></div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 9. TURNOVER ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Turnover &amp; <span>Growth</span></h2><div class="rule"></div></div>
+  <div class="content">
+    <div class="kpis">
+      <div class="kpi"><b>₹40<em> Cr</em></b><span>TURNOVER · FY 2025-26</span></div>
+      <div class="kpi"><b>₹250<em> Cr</em></b><span>PROPOSED · FY 2026-27</span></div>
+      <div class="kpi"><b>6.25<em>×</em></b><span>PROPOSED GROWTH</span></div>
+    </div>
+    <div class="chart">
+      <h3>Annual Turnover (₹ crore)</h3>
+      <div class="sub">FY 2025-26 actual; FY 2026-27 proposed.</div>
+      <div class="bars">
+        <div class="grid-line" style="bottom:0%"><span>0</span></div>
+        <div class="grid-line" style="bottom:20%"><span>50</span></div>
+        <div class="grid-line" style="bottom:40%"><span>100</span></div>
+        <div class="grid-line" style="bottom:60%"><span>150</span></div>
+        <div class="grid-line" style="bottom:80%"><span>200</span></div>
+        <div class="grid-line" style="bottom:100%"><span>250</span></div>
+        <div class="bar actual" style="height:16%"><div class="val">₹40 Cr</div></div>
+        <div class="bar proj" style="height:100%"><div class="val" style="top:-8mm">₹250 Cr</div></div>
+      </div>
+      <div class="xlabels"><div>FY 2025-26<small>Actual</small></div><div>FY 2026-27<small>Proposed</small></div></div>
+      <div class="legend"><span><i style="background:var(--navy)"></i>Actual</span><span><i style="background:repeating-linear-gradient(135deg,var(--red) 0 1mm,var(--red-dark) 1mm 2mm)"></i>Proposed</span></div>
+    </div>
+    <p class="note muted">In our first full financial year we built a strong base in road and government building construction. Our order book is growing, and our proposed turnover for FY 2026-27 is ₹250 crore, led by infrastructure.</p>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 10. OUR CLIENTS ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="cl-band">Our Clients</div>
+  <div class="content" style="top:56mm">
+    <p class="muted" style="text-align:center;margin-bottom:7mm">Central and state government organisations we have worked with.</p>
+    <div class="cl-grid">
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/nhai.png" alt=""></div><b>NHAI</b><span>National Highways Authority of India</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>PWD M.P.</b><span>Public Works Department, Govt. of Madhya Pradesh</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/ntpc.png" alt=""></div><b>NTPC</b><span>NTPC Limited</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>MPWRD</b><span>Water Resources Department, Govt. of Madhya Pradesh</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mprdc.png" alt=""></div><b>MPRDC</b><span>Madhya Pradesh Road Development Corporation</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>MPHIDB</b><span>M.P. Housing &amp; Infrastructure Development Board</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>MPRRDA</b><span>Madhya Pradesh Rural Road Development Authority</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/imc-indore.png" alt=""></div><b>Nagar Nigam Indore</b><span>Indore Municipal Corporation</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>Nagar Nigam Ujjain</b><span>Ujjain Municipal Corporation</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>PHE</b><span>Public Health Engineering Dept., Govt. of Madhya Pradesh</span></div>
+      <div class="cl"><div class="cl-logo"><img src="../images/clients/mp-emblem.png" alt=""></div><b>UDA Ujjain</b><span>Ujjain Development Authority</span></div>
+    </div>
+  </div>
+  <img class="cl-photo" src="../images/infra/road-expressway.jpg" alt="">
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 11. WHY CHOOSE US ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Why Choose <span>NexoFab</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:58mm">
+    <div class="why-grid">
+      <div class="why"><div class="wn">01</div><h3>Proven Government Experience</h3><p>Work for 11 central, state and municipal bodies — including NHAI, NTPC, PWD M.P., MPRDC and Nagar Nigam Indore.</p></div>
+      <div class="why"><div class="wn">02</div><h3>Rapid, Sustained Growth</h3><p>From ₹40 crore turnover in our first full year to a proposed ₹250 crore in FY 2026-27.</p></div>
+      <div class="why"><div class="wn">03</div><h3>Diversified Capability</h3><p>Construction, manufacturing and repair under one roof — one partner for many requirements.</p></div>
+      <div class="why"><div class="wn">04</div><h3>Fully Compliant</h3><p>Incorporated public limited company with GST, MSME (Udyam) and Shops &amp; Establishment registrations.</p></div>
+      <div class="why"><div class="wn">05</div><h3>Quality &amp; On-Time Delivery</h3><p>Work built to government specifications, tested at every stage and handed over on schedule.</p></div>
+      <div class="why"><div class="wn">06</div><h3>Rooted in Madhya Pradesh</h3><p>Headquartered in Indore, with a strong understanding of local sites, suppliers and authorities.</p></div>
+    </div>
+    <div class="quote">&#8220;We stand behind everything we build — from the first drawing to years of service after handover.&#8221;<span>— Board of Directors, NexoFab Industries Limited</span></div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 12. HSQE ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Safety, Quality &amp; <span>Environment</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:58mm">
+    <p class="lead" style="margin-bottom:5mm">NexoFab is committed to protecting its people, the public and the environment, and to delivering work of consistent quality on every site.</p>
+    <div class="hs-grid">
+      <div class="hs"><h3>Health &amp; Safety</h3><ul class="checks"><li>Safety induction for every worker</li><li>Personal protective equipment on all sites</li><li>Barricading, signage &amp; traffic management</li><li>Regular site safety inspections</li></ul></div>
+      <div class="hs"><h3>Quality</h3><ul class="checks"><li>Work to approved drawings &amp; specifications</li><li>Testing of materials &amp; workmanship</li><li>Stage-wise inspection &amp; records</li><li>Prompt correction of any defects</li></ul></div>
+      <div class="hs"><h3>Environment</h3><ul class="checks"><li>Dust &amp; noise control at sites</li><li>Responsible disposal of construction waste</li><li>Efficient use of water, fuel &amp; materials</li><li>Plantation &amp; site restoration</li></ul></div>
+      <div class="hs"><h3>People &amp; Community</h3><ul class="checks"><li>Fair wages &amp; welfare for workers</li><li>Respect for local communities</li><li>Minimal disruption to the public</li><li>Training &amp; skill development</li></ul></div>
+    </div>
+    <img class="hs-photo" src="../images/infra/hospital-under-construction.jpg" alt="">
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 13. VALUES & REGISTRATIONS ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Vision &amp; <span>Compliance</span></h2><div class="rule"></div></div>
+  <div class="content">
+    <div class="values">
+      <div class="value"><h3>Our Vision</h3><p>To be a trusted, diversified infrastructure and manufacturing house known for durable public works, purity in products, precision in machines, and reliability in service.</p></div>
+      <div class="value"><h3>Our Mission</h3><p>Deliver world-class construction, manufacturing and repair solutions that create value for customers, employees, and communities alike.</p></div>
+      <div class="value"><h3>Quality First</h3><p>Every process is licensed, certified and audited. We never hand over what we wouldn't use ourselves.</p></div>
+      <div class="value"><h3>Integrity Always</h3><p>Honest pricing, honest timelines and honest workmanship — relationships built to last decades, not deals.</p></div>
+    </div>
+    <div class="sec-h">Licenses &amp; Registrations</div>
+    <table>
+      <tr><th>Registration</th><th>Details</th></tr>
+      <tr><td>Certificate of Incorporation</td><td>Ministry of Corporate Affairs — CIN U28130MP2025PLC077466, ROC Gwalior. Incorporated 25 June 2025.</td></tr>
+      <tr><td>Memorandum of Association</td><td>e-MOA (Form INC-33) under the Companies Act, 2013.</td></tr>
+      <tr><td>Articles of Association</td><td>e-AOA (Form INC-34) under the Companies Act, 2013.</td></tr>
+      <tr><td>GST Registration</td><td>GSTIN 23AAMCT0204A2Z4 — Form GST REG-06, Government of India.</td></tr>
+      <tr><td>MSME / Udyam Registration</td><td>UDYAM-MP-23-0301776 — Ministry of MSME, Government of India.</td></tr>
+      <tr><td>Shops &amp; Establishment</td><td>Registered under the M.P. Shops &amp; Establishments Act — District Labour Office, Indore.</td></tr>
+    </table>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 14. OUR PROJECTS (GALLERY) ═══════════ -->
+<div class="page">
+  <div class="arc"></div><div class="wedge"></div>
+  <img class="mini-logo" src="assets/logo.png" alt="">
+  <div class="title"><h2>Our <span>Projects</span></h2><div class="rule"></div></div>
+  <div class="content" style="top:54mm">
+    <div class="gal">
+      <img class="span2" src="../images/infra/road-expressway.jpg" alt="">
+      <img src="../images/infra/construction-foundation.jpg" alt="">
+      <img src="../images/infra/construction-scaffolding.jpg" alt="">
+      <img src="../images/infra/hospital-district.jpg" alt="">
+      <img src="../images/infra/road-highway-aerial.jpg" alt="">
+      <img src="assets/photo-28929510-600.jpg" alt="">
+      <img src="assets/photo-32588552-600.jpg" alt="">
+    </div>
+  </div>
+  <div class="footer"><b>NEXOFAB INDUSTRIES LIMITED</b><span>Company Profile 2026-27</span></div>
+</div>
+
+<!-- ═══════════ 15. CONTACT ═══════════ -->
+<div class="page contact">
+  <div class="photo"></div>
+  <div class="top"><img src="assets/logo.png" alt="NexoFab Industries Limited"></div>
+  <div class="arc-tr"></div>
+  <h2>CONTACT<br>US</h2>
+  <div class="rule"></div>
+  <div class="lines">
+    <div class="line"><i>●</i><div><b>Registered Office</b>CH-73, MR 10 Main Road, Sukhliya, Indore, Madhya Pradesh — 452010</div></div>
+    <div class="line"><i>●</i><div><b>Phone</b>+91 62626 66016</div></div>
+    <div class="line"><i>●</i><div><b>Email</b>nexofabindustrieslimited@hotmail.com</div></div>
+    <div class="line"><i>●</i><div><b>Working Hours</b>Monday – Saturday, 9:00 AM – 6:30 PM</div></div>
+  </div>
+  <div class="legal">NexoFab Industries Limited · CIN U28130MP2025PLC077466 · GSTIN 23AAMCT0204A2Z4</div>
+</div>
+
+</body>
+</html>

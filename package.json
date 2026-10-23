@@ -1,0 +1,13 @@
+{
+  "name": "nexofab-full-app-deployment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NexoFab website and internal applications",
+  "scripts": {
+    "start": "node server.js",
+    "install:apps": "node deploy-all.js install",
+    "build:apps": "node deploy-all.js build",
+    "start:apps": "node deploy-all.js start"
+  },
+  "engines": { "node": ">=20" }
+}

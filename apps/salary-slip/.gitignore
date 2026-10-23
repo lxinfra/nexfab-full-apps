@@ -1,0 +1,10 @@
+node_modules
+.next
+next-env.d.ts
+*.tsbuildinfo
+
+# Local database (contains payroll data) and restore safety copies
+prisma/dev.db
+prisma/dev.db-journal
+prisma/*.bak
+prisma/*.tmp

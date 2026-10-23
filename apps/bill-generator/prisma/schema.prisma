@@ -1,0 +1,413 @@
+// GST Bill Generator - Supabase Postgres via Prisma.
+generator client {
+  provider      = "prisma-client-js"
+  // "native" is this machine; "rhel-openssl-3.0.x" is the AWS Lambda runtime
+  // that Netlify Functions use. Both engines are needed so one build output
+  // works locally and when deployed.
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// String-valued enums (kept as String for SQLite portability):
+//   Company.*            -
+//   Invoice.docType      TAX_INVOICE | PROFORMA | QUOTATION | DELIVERY_CHALLAN
+//   Invoice.status       DRAFT | SENT | PAID | PARTIALLY_PAID | CANCELLED
+//   Invoice.supplyType   INTRA_STATE | INTRA_CITY | INTER_STATE
+//   InvoiceItem.discountType  PERCENT | AMOUNT
+//   Payment.method       CASH | UPI | BANK_TRANSFER | CHEQUE | CARD | OTHER
+// All money is an integer number of paise. All quantities are integers in
+// thousandths of a unit (qtyMilli): 2.5 PCS => 2500.
+// ---------------------------------------------------------------------------
+
+model Company {
+  id           String  @id @default(cuid())
+  legalName    String
+  tradeName    String?
+  initials     String?
+  tagline      String?
+  logoPath     String?
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  state        String
+  stateCode    String
+  pincode      String
+  country      String  @default("India")
+  gstin        String?
+  pan          String?
+  cin          String?
+  phone        String?
+  email        String?
+  website      String?
+
+  bankName        String?
+  bankAccountName String?
+  bankAccountNo   String?
+  bankIfsc        String?
+  bankBranch      String?
+  bankAccountType String?
+  upiId           String?
+
+  invoicePrefix   String  @default("INV/")
+  numberFormat    String  @default("{BUYERWORD}/{MMM}/{YY}/{SEQ}")
+  includeFyInNo   Boolean @default(true)
+  numberPadding   Int     @default(4)
+  /**
+   * The first sequence number a new series hands out.
+   */
+  numberStart     Int     @default(1)
+  invoiceSubtitle String?
+  defaultTerms    String?
+  signaturePath   String?
+  /// JSON map of overrides for the fixed wording printed on a bill
+  labels          String?
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customers     Customer[]
+  products      Product[]
+  invoices      Invoice[]
+  counters      InvoiceCounter[]
+  uploads       Upload[]
+  importBatches ImportBatch[]
+}
+
+model InvoiceCounter {
+  id         String  @id @default(cuid())
+  companyId  String
+  docType    String
+  fy         String
+  lastNumber Int     @default(0)
+  company    Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, docType, fy])
+}
+
+model Customer {
+  id        String  @id @default(cuid())
+  companyId String
+  name      String
+  initials  String?
+  gstin     String?
+  phone     String?
+  email     String?
+
+  billingLine1     String
+  billingLine2     String?
+  billingCity      String
+  billingState     String
+  billingStateCode String
+  billingPincode   String
+
+  shipSameAsBilling Boolean @default(true)
+  shippingName      String?
+  shippingLine1     String?
+  shippingLine2     String?
+  shippingCity      String?
+  shippingState     String?
+  shippingStateCode String?
+  shippingPincode   String?
+
+  notes     String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
+
+  @@index([companyId, name])
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  companyId   String
+  name        String
+  description String?
+  hsnSac      String?
+  unit        String  @default("PCS")
+  ratePaise   Int
+  gstRate     Int
+  isService   Boolean @default(false)
+  isActive    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  items   InvoiceItem[]
+
+  @@index([companyId, name])
+}
+
+model Invoice {
+  id             String  @id @default(cuid())
+  companyId      String
+  customerId     String
+  docType        String  @default("TAX_INVOICE")
+  number         String?
+  /// a number typed by hand instead of taken from the company's series
+  numberOverride String?
+  fy             String
+  /**
+   * Which counter bucket the sequence came from, e.g. "2026-09".
+   */
+  seqBucket      String?
+  seq            Int?
+
+  invoiceDate       DateTime
+  dueDate           DateTime?
+  placeOfSupply     String
+  placeOfSupplyCode String
+  supplyType        String
+  reverseCharge     Boolean   @default(false)
+  status            String    @default("DRAFT")
+  agreementNo       String?
+  workOrderDate     DateTime?
+  rebateLabel       String?
+  rebateBp          Int       @default(0)
+  rebatePaise       Int       @default(0)
+  notes             String?
+  terms             String?
+
+  companySnapshot  String
+  customerSnapshot String
+
+  subtotalPaise   Int @default(0)
+  discountPaise   Int @default(0)
+  taxablePaise    Int @default(0)
+  cgstPaise       Int @default(0)
+  sgstPaise       Int @default(0)
+  igstPaise       Int @default(0)
+  roundOffPaise   Int @default(0)
+  totalPaise      Int @default(0)
+  amountPaidPaise Int @default(0)
+
+  /// Set when the invoice came from a monthly sheet import.
+  importBatchId  String?
+  /// The bill number the sheet already carried, kept only for tracing.
+  /// Never used as the invoice number itself.
+  externalBillNo String?
+
+  revision     Int       @default(0)
+  lastEditedAt DateTime?
+  cancelledAt  DateTime?
+  cancelReason String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  company     Company           @relation(fields: [companyId], references: [id])
+  customer    Customer          @relation(fields: [customerId], references: [id])
+  importBatch ImportBatch?      @relation(fields: [importBatchId], references: [id], onDelete: SetNull)
+  importRows  ImportRow[]
+  items       InvoiceItem[]
+  payments    Payment[]
+  revisions   InvoiceRevision[]
+  uploads     Upload[]
+
+  @@unique([companyId, number])
+  @@unique([companyId, docType, seqBucket, seq])
+  @@index([companyId, invoiceDate])
+  @@index([companyId, status])
+  @@index([importBatchId])
+}
+
+/**
+ * A point-in-time copy of an invoice, written just before it is edited.
+ * Issued documents can be corrected, but every earlier version stays on record.
+ */
+model InvoiceRevision {
+  id        String   @id @default(cuid())
+  invoiceId String
+  revision  Int
+  /**
+   * JSON of the invoice and its items exactly as they were
+   */
+  snapshot  String
+  reason    String?
+  createdAt DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@unique([invoiceId, revision])
+  @@index([invoiceId])
+}
+
+model InvoiceItem {
+  id        String  @id @default(cuid())
+  invoiceId String
+  productId String?
+
+  name          String
+  description   String?
+  hsnSac        String?
+  unit          String
+  qtyMilli      Int
+  ratePaise     Int
+  discountType  String  @default("PERCENT")
+  discountValue Int     @default(0)
+  grossPaise    Int
+  discountPaise Int
+  taxablePaise  Int
+  gstRate       Int
+  cgstPaise     Int
+  sgstPaise     Int
+  igstPaise     Int
+  totalPaise    Int
+  sortOrder     Int     @default(0)
+
+  invoice Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+
+  @@index([invoiceId])
+}
+
+/**
+ * Metadata for an uploaded file. The bytes live in Supabase Storage (or under
+ * public/uploads before Supabase is configured) - never in this row.
+ */
+model Upload {
+  id          String   @id @default(cuid())
+  companyId   String?
+  invoiceId   String?
+  kind        String   @default("attachment")
+  fileName    String
+  contentType String?
+  sizeBytes   Int?
+  /**
+   * Path inside the storage bucket, or the /uploads path when stored locally.
+   */
+  storagePath String
+  backend     String   @default("local")
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+
+  company Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  invoice Invoice? @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([invoiceId])
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  paidOn      DateTime
+  amountPaise Int
+  method      String   @default("BANK_TRANSFER")
+  reference   String?
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+}
+
+/**
+ * One upload of a monthly details sheet.
+ * The file hash is what stops the same sheet being imported twice: an upload
+ * whose hash already exists for this company is flagged before anything is
+ * generated, rather than quietly producing a second set of invoices.
+ */
+model ImportBatch {
+  id        String @id @default(cuid())
+  companyId String
+
+  fileName    String
+  /// SHA-256 of the uploaded bytes.
+  fileHash    String
+  fileSize    Int?
+  /// Where the original sheet was kept, so an import stays auditable.
+  storagePath String?
+
+  /// Period the sheet covers, derived from its dates. 1-12, and e.g. 2026.
+  periodMonth Int?
+  periodYear  Int?
+
+  /// PENDING | GENERATING | COMPLETED | FAILED | CANCELLED
+  status String @default("PENDING")
+
+  /// How rows were turned into bills: BILL_NO | PER_ROW | DATE_CUSTOMER
+  grouping          String  @default("BILL_NO")
+  /// The column mapping that was used, as JSON, so an import can be repeated.
+  mapping           String?
+  /// Supply type applied to rows the sheet did not specify.
+  defaultSupplyType String  @default("INTRA_STATE")
+
+  totalRows    Int @default(0)
+  validRows    Int @default(0)
+  errorRows    Int @default(0)
+  billCount    Int @default(0)
+  invoiceCount Int @default(0)
+
+  /// Validation issues as JSON, so the report survives a page reload.
+  issues String?
+  error  String?
+
+  createdAt   DateTime  @default(now())
+  generatedAt DateTime?
+
+  company  Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  rows     ImportRow[]
+  invoices Invoice[]
+
+  @@index([companyId, createdAt])
+  @@index([companyId, fileHash])
+}
+
+/**
+ * One row of the uploaded sheet, kept verbatim.
+ * This is the audit trail: sheet row -> batch -> row -> generated invoice.
+ * billKey records what the row was grouped by, so it is always possible to see
+ * why two rows did or did not end up on the same invoice.
+ */
+model ImportRow {
+  id      String @id @default(cuid())
+  batchId String
+
+  /// 1-based row number in the sheet, as the user sees it.
+  rowNumber Int
+  /// The raw cells, as JSON, exactly as read.
+  raw       String
+
+  /// Rows sharing a billKey become one invoice.
+  billKey        String?
+  /// The sheet's own bill number for this row, if it had one.
+  externalBillNo String?
+
+  customerName String?
+  itemName     String?
+  description  String?
+  hsnSac       String?
+  unit         String?
+  qtyMilli     Int?
+  ratePaise    Int?
+  gstRate      Int?
+  supplyType   String?
+  rowDate      DateTime?
+
+  /// VALID | INVALID | SKIPPED | GENERATED
+  status String  @default("VALID")
+  /// Validation problems for this row, as a JSON array of messages.
+  issues String?
+
+  invoiceId String?
+
+  createdAt DateTime @default(now())
+
+  batch   ImportBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  invoice Invoice?    @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([batchId, rowNumber])
+  @@index([batchId, billKey])
+  @@index([invoiceId])
+}

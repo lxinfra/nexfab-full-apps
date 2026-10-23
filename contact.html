@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — NexoFab Industries Limited</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div><span>📞 +91 62626 66016</span><span>✉️ nexofabindustrieslimited@hotmail.com</span></div>
+      <div><a href="contact.html">Enquiry</a></div>
+    </div>
+  </div>
+
+  <header class="site">
+    <div class="nav-inner">
+      <a class="logo" href="index.html"><img src="images/logo-cropped.png" alt="NexoFab Industries Limited"></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-burger" aria-label="Open menu">☰</label>
+      <nav class="main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us ▾</a>
+            <ul class="drop">
+              <li><a href="about.html">Company Overview</a></li>
+              <li><a href="about.html#directors">Board of Directors</a></li>
+              <li><a href="about.html#values">Vision &amp; Values</a></li>
+            </ul>
+          </li>
+          <li><a href="businesses.html">Our Businesses ▾</a>
+            <ul class="drop">
+              <li><a href="businesses.html#bottles">Packaged Water &amp; Bottles</a></li>
+              <li><a href="businesses.html#machines">Machine Manufacturing</a></li>
+              <li><a href="businesses.html#repair">Repair &amp; Maintenance</a></li>
+              <li><a href="businesses.html#infra">Infrastructure &amp; Construction</a></li>
+            </ul>
+          </li>
+          <li><a href="projects.html">Our Work</a></li>
+          <li><a href="clients.html">Our Clients</a></li>
+          <li><a href="licenses.html">Licenses</a></li>
+          <li><a href="contact.html" class="active">Contact Us</a></li>
+          <li><a href="/admin">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <div class="crumb"><a href="index.html">Home</a> / Contact Us</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ EDIT: CONTACT DETAILS ═══════════ -->
+  <section>
+    <div class="container contact-grid">
+      <div>
+        <span class="kicker">Reach Us</span>
+        <h2 class="sec-title">We'd Love to Hear From You</h2>
+        <p style="color:var(--muted); margin-bottom:30px">For road and building construction projects, bulk bottle orders, machine enquiries, repair requests, or partnerships — send us a message and our team will respond within one business day.</p>
+        <div class="c-line"><div class="ico">📍</div><div><b>Registered Office</b><span>CH-73, MR 10 Main Road, Sukhliya, Indore, Madhya Pradesh, India — 452010</span></div></div>
+        <div class="c-line"><div class="ico">📞</div><div><b>Phone</b><span>+91 62626 66016</span></div></div>
+        <div class="c-line"><div class="ico">✉️</div><div><b>Email</b><span>nexofabindustrieslimited@hotmail.com</span></div></div>
+        <div class="c-line"><div class="ico">🕐</div><div><b>Working Hours</b><span>Monday – Saturday, 9:00 AM – 6:30 PM</span></div></div>
+      </div>
+      <div>
+        <form class="contact" onsubmit="event.preventDefault(); this.querySelector('button').textContent='✔ Message Recorded (mock form)';">
+          <input type="text" placeholder="Your Name *" required>
+          <input type="email" placeholder="Your Email *" required>
+          <input type="tel" placeholder="Phone Number">
+          <select>
+            <option value="">— Enquiry Type —</option>
+            <option>Road / Building Construction Project</option>
+            <option>Packaged Water / Bottle Order</option>
+            <option>Machine Purchase</option>
+            <option>Repair / AMC Request</option>
+            <option>Other</option>
+          </select>
+          <textarea rows="6" placeholder="Your Message *" required></textarea>
+          <button class="btn" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site">
+    <div class="container foot-grid">
+      <div>
+        <div class="foot-logo"><span>NEXOFAB</span> INDUSTRIES LIMITED</div>
+        <p>A diversified manufacturing &amp; infrastructure company — building roads and public buildings, producing packaged water &amp; PET bottles, and building and servicing machines.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html#directors">Board of Directors</a></li>
+          <li><a href="projects.html">Our Work</a></li>
+          <li><a href="clients.html">Our Clients</a></li>
+          <li><a href="licenses.html">Licenses</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Businesses</h4>
+        <ul>
+          <li><a href="businesses.html#bottles">Water &amp; Bottles</a></li>
+          <li><a href="businesses.html#machines">Machine Manufacturing</a></li>
+          <li><a href="businesses.html#repair">Repair &amp; Maintenance</a></li>
+          <li><a href="businesses.html#infra">Infrastructure &amp; Construction</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Registered Office</h4>
+        <ul>
+          <li>CH-73, MR 10 Main Road, Sukhliya,<br>Indore, Madhya Pradesh — 452010</li>
+          <li>📞 +91 62626 66016</li>
+          <li>✉️ nexofabindustrieslimited@hotmail.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 <b style="color:#fff">NexoFab Industries Limited</b>. All Rights Reserved. | <a href="#">Disclaimer</a> | <a href="#">Privacy Policy</a></div>
+  </footer>
+
+  <script>
+    // close the mobile menu after tapping a link
+    document.querySelectorAll('nav.main a').forEach(a => a.addEventListener('click', () => { document.getElementById('nav-toggle').checked = false; }));
+  </script>
+</body>
+</html>

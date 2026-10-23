@@ -1,0 +1,36 @@
+{
+  "name": "salary-slip",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/setup-db.mjs && next dev",
+    "build": "next build",
+    "start": "node scripts/setup-db.mjs && next start",
+    "test": "vitest run",
+    "postinstall": "prisma generate",
+    "db:setup": "node scripts/setup-db.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "@react-pdf/renderer": "^4.9.0",
+    "exceljs": "^4.4.0",
+    "jszip": "^3.10.2",
+    "next": "^15.5.26",
+    "papaparse": "^5.7.0",
+    "pdf-lib": "^1.17.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.3",
+    "@types/papaparse": "^5.5.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "prisma": "^6.19.3",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11"
+  }
+}

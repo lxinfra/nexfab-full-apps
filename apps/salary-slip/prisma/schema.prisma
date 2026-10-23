@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Company {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  address              String
+  phone                String?
+  email                String?
+  website              String?
+  gstin                String?
+  pan                  String?
+  tan                  String?
+  logo                 Bytes? // stored in the DB so backup is one file
+  logoMime             String?
+  signatoryName        String?
+  signatoryDesignation String?
+  statutory            String   @default("{}") // JSON StatutorySettings (thresholds, PF, ESI, PT, TDS); missing keys use defaults
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  employees      Employee[]
+  deductionRules DeductionRule[]
+  payrollRuns    PayrollRun[]
+  templates      SalaryTemplate[]
+}
+
+// A CTC structure for a grade, e.g. "M1 to M4". Employees on a template get
+// their salary components from it and their CTC.
+model SalaryTemplate {
+  id         Int      @id @default(autoincrement())
+  companyId  Int
+  name       String
+  components String // JSON: ordered TemplateComponent[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employees Employee[]
+
+  @@unique([companyId, name])
+}
+
+model Employee {
+  id            Int       @id @default(autoincrement())
+  companyId     Int
+  code          String
+  name          String
+  designation   String?
+  department    String?
+  dateOfJoining DateTime?
+  pan           String?
+  uan           String?
+  esiNumber     String?
+  bankName      String?
+  bankAccount   String?
+  ifsc          String?
+  status        String    @default("ACTIVE") // ACTIVE | INACTIVE
+  templateId    Int? // CTC structure template; null = salary components entered by hand
+  ctcAmount     Float?
+  ctcPeriod     String? // YEARLY | MONTHLY: how ctcAmount was entered
+
+  company    Company                 @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  template   SalaryTemplate?         @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  components SalaryComponent[]
+  ruleLinks  DeductionRuleEmployee[]
+  entries    PayrollEntry[]
+
+  @@unique([companyId, code])
+}
+
+// An employee's salary structure: one row per earning component.
+model SalaryComponent {
+  id            Int    @id @default(autoincrement())
+  employeeId    Int
+  name          String
+  monthlyAmount Float
+  sortOrder     Int    @default(0)
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, name])
+}
+
+model DeductionRule {
+  id                  Int     @id @default(autoincrement())
+  companyId           Int
+  name                String
+  type                String // PERCENTAGE | FIXED | SLAB | MANUAL | TDS
+  baseType            String? // BASIC | GROSS | COMPONENTS
+  baseComponents      String? // JSON array of component names when baseType = COMPONENTS
+  percentage          Float?
+  fixedAmount         Float?
+  slabs               String? // JSON: [{from, to, amount}]
+  baseCap             Float? // ceiling on the base
+  amountCap           Float? // ceiling on the resulting amount
+  eligibilityMaxGross Float? // applies only if monthly gross <= X
+  appliesToAll        Boolean @default(true)
+  employerType        String? // NONE | PERCENTAGE | FIXED
+  employerValue       Float?
+  active              Boolean @default(true)
+  sortOrder           Int     @default(0)
+
+  company   Company                 @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employees DeductionRuleEmployee[]
+
+  @@unique([companyId, name])
+}
+
+model DeductionRuleEmployee {
+  ruleId     Int
+  employeeId Int
+
+  rule     DeductionRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  employee Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@id([ruleId, employeeId])
+}
+
+model PayrollRun {
+  id          Int       @id @default(autoincrement())
+  companyId   Int
+  month       Int // 1-12
+  year        Int
+  status      String    @default("DRAFT") // DRAFT | FINALISED
+  finalisedAt DateTime?
+
+  company Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  entries PayrollEntry[]
+  slips   Slip[]
+
+  @@unique([companyId, month, year])
+}
+
+// One row per employee per month: the inputs and the computed result.
+model PayrollEntry {
+  id               Int    @id @default(autoincrement())
+  runId            Int
+  employeeId       Int
+  totalDays        Int
+  paidDays         Float
+  lopDays          Float
+  arrears          Float  @default(0)
+  oneTimeEarnings  String @default("[]") // JSON: [{name, amount}]
+  manualDeductions String @default("{}") // JSON: {rules: {ruleId: amount}, adhoc: [{name, amount}]}
+  overrides        String @default("{}") // JSON: {earnings: {name: amount}, deductions: {name: amount}}
+  computed         String @default("{}") // JSON: PayrollResult
+
+  run      PayrollRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  employee Employee   @relation(fields: [employeeId], references: [id])
+
+  @@unique([runId, employeeId])
+}
+
+// Frozen at finalise; never recomputed.
+model Slip {
+  id           Int      @id @default(autoincrement())
+  runId        Int
+  employeeId   Int
+  employeeCode String
+  employeeName String
+  month        Int
+  year         Int
+  netPay       Float
+  snapshot     String // JSON: company, employee and all line items as issued
+  pdf          Bytes // the exact PDF issued
+  issuedAt     DateTime @default(now())
+
+  run PayrollRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@unique([runId, employeeId])
+}

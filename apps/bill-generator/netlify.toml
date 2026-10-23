@@ -1,0 +1,47 @@
+#  Netlify deployment for the GST Bill Generator.
+#
+#  This app is server-rendered: every page is dynamic, there are 19 API routes,
+#  and Prisma plus the Supabase service-role key have to stay on the server. So
+#  there is no static "dist" folder to publish. The Next.js runtime below turns
+#  `.next` into Netlify Functions and pushes the static chunks to the CDN; the
+#  publish directory is `.next` and Netlify reads the build manifest from it.
+
+[build]
+  # `prisma generate` must run before `next build`: Netlify installs
+  # dependencies with scripts that may not emit the client, and the build
+  # imports @prisma/client at module load.
+  command = "npx prisma generate && npx next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Prisma needs its engine downloads at build time.
+  PRISMA_HIDE_UPDATE_MESSAGE = "1"
+  # The bill PDFs embed TTF fonts and the importer loads the pdf.js worker;
+  # both are large, so give the build a little more headroom.
+  NODE_OPTIONS = "--max-old-space-size=4096"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# PDF generation and bill import are the two slow routes: rendering an A4
+# invoice with embedded fonts, or parsing a scanned bill, can exceed the 10s
+# default. Both are well inside the 26s synchronous ceiling.
+[functions]
+  node_bundler = "esbuild"
+
+[functions."***"]
+  included_files = ["public/fonts/**"]
+
+# Local `netlify dev` mirrors `npm run dev`.
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+  framework = "#custom"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"

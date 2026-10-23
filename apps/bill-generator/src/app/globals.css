@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #d9e8ff;
+  --color-brand-200: #bcd7ff;
+  --color-brand-300: #8ebdff;
+  --color-brand-400: #5897ff;
+  --color-brand-500: #2f72ff;
+  --color-brand-600: #1850f5;
+  --color-brand-700: #143de1;
+  --color-brand-800: #1734b6;
+  --color-brand-900: #19328f;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+}
+
+@layer components {
+  .label {
+    @apply mb-1 block text-xs font-medium tracking-wide text-slate-600 uppercase;
+  }
+  .input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs outline-none transition
+      placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100
+      disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
+  }
+  .input-sm {
+    @apply w-full rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm outline-none transition
+      focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+  }
+  /* Tailwind v4 cannot @apply a custom class, so each variant restates the base. */
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .btn-ghost {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2
+      text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand-600 text-white shadow-sm hover:bg-brand-700 active:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply border border-slate-300 bg-white text-slate-700 shadow-xs hover:bg-slate-50;
+  }
+  .btn-danger {
+    @apply border border-rose-200 bg-white text-rose-700 hover:bg-rose-50;
+  }
+  .btn-ghost {
+    @apply text-slate-600 hover:bg-slate-100;
+  }
+  .btn-sm {
+    @apply px-2.5 py-1.5 text-xs;
+  }
+  .card,
+  .card-pad {
+    @apply rounded-xl border border-slate-200 bg-white shadow-xs;
+  }
+  .card-pad {
+    @apply p-4 sm:p-6;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset;
+  }
+  .th {
+    @apply px-3 py-2 text-left text-xs font-semibold tracking-wide text-slate-500 uppercase;
+  }
+  .td {
+    @apply px-3 py-2.5 text-sm text-slate-700;
+  }
+  .section-title {
+    @apply text-sm font-semibold text-slate-900;
+  }
+  .hint {
+    @apply mt-1 text-xs text-slate-500;
+  }
+  .err {
+    @apply mt-1 text-xs font-medium text-rose-600;
+  }
+}
+
+/* Keep long tables usable on phones */
+.scroll-x {
+  @apply -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

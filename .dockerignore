@@ -1,0 +1,15 @@
+# Never build from local state or ship secrets into the image.
+**/node_modules
+**/.next
+**/dist
+**/.venv
+**/__pycache__
+**/.env
+**/.env.*
+!**/.env.example
+**/*.db
+**/*.tsbuildinfo
+**/storage
+**/data
+*.zip
+.git

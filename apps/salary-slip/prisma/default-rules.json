@@ -1,0 +1,6 @@
+[
+  { "name": "PF", "type": "PERCENTAGE", "baseType": "BASIC", "percentage": 0, "sortOrder": 1 },
+  { "name": "ESI", "type": "PERCENTAGE", "baseType": "GROSS", "percentage": 0, "sortOrder": 2 },
+  { "name": "PT", "type": "FIXED", "fixedAmount": 208, "sortOrder": 3 },
+  { "name": "TDS", "type": "PERCENTAGE", "baseType": "GROSS", "percentage": 10, "sortOrder": 4 }
+]
